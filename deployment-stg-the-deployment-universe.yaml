@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    note: Hello, I am stg!
+  labels:
+    app: hello
+    variant: stg
+  name: stg-the-deployment-universe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+      deployment: hello-universe
+      variant: stg
+  template:
+    metadata:
+      annotations:
+        note: Hello, I am stg!
+      labels:
+        app: hello
+        deployment: hello-universe
+        paramountcommerce.com/domain: platform
+        test: "1"
+        variant: stg
+    spec:
+      containers:
+      - command:
+        - /hello
+        - --port=8080
+        - --enableRiskyFeature=$(ENABLE_RISKY)
+        env:
+        - name: ALT_GREETING
+          valueFrom:
+            configMapKeyRef:
+              key: altGreeting
+              name: stg-the-map-universe
+        - name: ENABLE_RISKY
+          valueFrom:
+            configMapKeyRef:
+              key: enableRisky
+              name: stg-the-map-universe
+        image: monopole/hello:1
+        name: the-container
+        ports:
+        - containerPort: 8080

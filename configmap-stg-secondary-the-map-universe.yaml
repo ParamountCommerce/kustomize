@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  altGreeting: Welcome to stg-secondary!
+  enableRisky: "true"
+kind: ConfigMap
+metadata:
+  annotations:
+    note: Hello, I am stg-secondary!
+  labels:
+    app: hello
+    variant: stg-secondary
+  name: stg-secondary-the-map-universe

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    note: Hello, I am dev!
+  labels:
+    app: hello
+    variant: dev
+  name: dev-the-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+      deployment: hello
+      variant: dev
+  template:
+    metadata:
+      annotations:
+        note: Hello, I am dev!
+      labels:
+        app: hello
+        deployment: hello
+        paramountcommerce.com/domain: platform
+        test: "1"
+        variant: dev
+    spec:
+      containers:
+      - command:
+        - /hello
+        - --port=8080
+        - --enableRiskyFeature=$(ENABLE_RISKY)
+        env:
+        - name: ALT_GREETING
+          valueFrom:
+            configMapKeyRef:
+              key: altGreeting
+              name: dev-the-map
+        - name: ENABLE_RISKY
+          valueFrom:
+            configMapKeyRef:
+              key: enableRisky
+              name: dev-the-map
+        image: monopole/hello:1
+        name: the-container
+        ports:
+        - containerPort: 8080

@@ -41,7 +41,7 @@ spec:
             configMapKeyRef:
               key: enableRisky
               name: stg-secondary-the-map-universe
-        image: monopole/hello:1
+        image: monopole/hello:2
         name: the-container
         ports:
         - containerPort: 8080

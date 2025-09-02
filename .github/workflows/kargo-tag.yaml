@@ -27,8 +27,8 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           # Remove special characters and replace spaces with hyphens
           CLEAN_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 ]//g' | tr ' ' '-')
-          # Create tag with format KARGO:<PR number>:<PR title>
-          TAG_NAME="KARGO:${PR_NUMBER}:${CLEAN_TITLE,,}"
+          # Create tag with format KARGO_<PR number>_<PR title>
+          TAG_NAME="KARGO_${PR_NUMBER}_${CLEAN_TITLE,,}"
           # Limit length and ensure it starts with a letter
           TAG_NAME=$(echo "$TAG_NAME" | cut -c1-50)
 

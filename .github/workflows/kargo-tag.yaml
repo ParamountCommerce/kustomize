@@ -22,12 +22,14 @@ jobs:
 
       - name: Create tag
         run: |
-          # Get PR title and clean it for tag format
+          # Get PR number and title
+          PR_NUMBER="${{ github.event.pull_request.number }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           # Remove special characters and replace spaces with hyphens
           CLEAN_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 ]//g' | tr ' ' '-')
+          # Create tag with format KARGO:<PR number>:<PR title>
+          TAG_NAME="KARGO:${PR_NUMBER}:${CLEAN_TITLE,,}"
           # Limit length and ensure it starts with a letter
-          TAG_NAME="KARGO-PR-${CLEAN_TITLE,,}"
           TAG_NAME=$(echo "$TAG_NAME" | cut -c1-50)
 
           echo "Creating tag: $TAG_NAME"

@@ -22,7 +22,7 @@ spec:
         app: hello
         deployment: hello-universe
         paramountcommerce.com/domain: platform
-        test: "15"
+        test: "17"
         variant: stg-secondary
     spec:
       containers:
